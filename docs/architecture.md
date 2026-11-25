@@ -57,7 +57,7 @@ sesiones degrada la conversación a "recontextualizar en el próximo turno", con
 > **Verificado 2026-11-24:** las sesiones del motor **sí persisten** a un reinicio
 > (`~/.local/share/opencode/opencode.db`, 29 sesiones en disco). El evento de pérdida no es un
 > reinicio, es un upgrade o una migración de esquema del motor. La decisión no cambia; la
-> probabilidad del riesgo baja. Ver `docs/migration.md`.
+> probabilidad del riesgo baja.
 
 ## 3. Capas y contratos
 

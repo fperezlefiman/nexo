@@ -267,7 +267,7 @@ perfil:
 1. Reactivar el perfil en el sistema anterior.
 2. Apuntar el grupo de Telegram al bot anterior (el bot nuevo queda silencioso, no eliminado).
 3. Deshabilitar el cron del perfil en nexo (`UPDATE channels SET enabled = false`).
-4. Anotar en `parity.md` la fecha de reversión y la causa.
+4. Anotar la fecha de reversión y la causa en el registro de operación.
 
 Los datos de nexo no se borran en un rollback: el transcript queda como evidencia.
 

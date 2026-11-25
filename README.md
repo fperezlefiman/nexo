@@ -9,8 +9,7 @@ memoria recuperada por significado, skills compartidas y versionadas, y canales 
 > **Estado: F0–F7 implementados y en uso diario.** Siete perfiles corren sobre `nexo` con tráfico real. La suite
 > corre contra un Postgres de descarte (`./scripts/test.sh`) y el repo trae un workflow de GitHub
 > Actions que la corre sin el motor. Los contract tests en vivo se saltean solos si el motor no
-> responde o si se agota la cuota del modelo gratuito. Pendientes declarados: aprobaciones de tools
-> ([roadmap](docs/roadmap.md)). Ver [paridad](docs/parity.md).
+> responde o si se agota la cuota del modelo gratuito. Pendiente declarado: aprobaciones de tools.
 
 ## Qué resuelve
 
@@ -91,9 +90,6 @@ Detalle de capas, contratos y modelo de datos: [docs/architecture.md](docs/archi
 ## Documentación
 
 - [docs/architecture.md](docs/architecture.md) — capas, contratos, modelo de datos, límites.
-- [docs/roadmap.md](docs/roadmap.md) — fases con gate de salida verificable.
-- [docs/migration.md](docs/migration.md) — validación por perfil y criterio de corte.
-- [docs/parity.md](docs/parity.md) — matriz de capacidades por perfil, la evidencia de la migración.
 - [docs/operations.md](docs/operations.md) — entornos, alertas con runbook, costos.
 - [docs/evals.md](docs/evals.md) — dataset, métricas y umbrales de la memoria.
 - [docs/decisions/](docs/decisions/README.md) — índice de ADRs agrupado por tema.
