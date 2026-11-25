@@ -1,0 +1,15 @@
+[Unit]
+Description=opencode · motor de agentes (servidor HTTP local)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=%h/.opencode/bin/opencode serve --service
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

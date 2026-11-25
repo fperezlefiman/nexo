@@ -1,0 +1,17 @@
+[Unit]
+Description=nexo · worker de turnos
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/nexo
+EnvironmentFile=%h/nexo/.env
+ExecStart=%h/nexo/.venv/bin/nexo worker
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

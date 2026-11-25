@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+.env.*
+!.env.example
+
+# estado del scout de empleos: listas de "ya vistos", no es código
+jobs/career-mentor/state/
+
+# build output
+build/
+*.egg-info/

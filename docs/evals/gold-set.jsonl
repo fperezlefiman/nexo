@@ -1,0 +1,3 @@
+{"id": 1, "question": "¿cada cuánto corre el scheduler de jobs?", "expected": [1], "tipo": "paráfrasis", "split": "dev"}
+{"id": 2, "question": "¿dónde se guardan los vectores de memoria?", "expected": [2], "tipo": "léxico", "split": "dev"}
+{"id": 3, "question": "¿qué pasa si el motor no responde?", "expected": [3], "tipo": "paráfrasis", "split": "test"}
