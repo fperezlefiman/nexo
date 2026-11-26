@@ -118,18 +118,21 @@ class TelegramBot:
             body = exc.read().decode("utf-8", "ignore")[:300]
             raise RuntimeError(f"{method} {exc.code}: {body}") from None
 
-    def send(self, chat_id: str, text: str, silent: bool = True) -> int | None:
+    def send(self, chat_id: str, text: str, silent: bool = True,
+             parse_mode: str | None = None) -> int | None:
         """Silent by default: this bot is an operations channel, not a chat that should buzz.
 
         The operator asked for it on 2026-11-25 (the notifications were the noise). Passing
-        `silent=False` is the exception, not the rule.
+        `silent=False` is the exception, not the rule. `parse_mode` ("Markdown") is opt-in:
+        plain text must stay plain, since unmatched markers in arbitrary output would break it.
         """
         message_id = None
         for chunk in split_message(text):
             try:
                 payload = self._call("sendMessage", chat_id=chat_id, text=chunk,
                                      disable_web_page_preview="true",
-                                     disable_notification="true" if silent else "false")
+                                     disable_notification="true" if silent else "false",
+                                     **({"parse_mode": parse_mode} if parse_mode else {}))
                 message_id = ((payload.get("result") or {}).get("message_id")) or message_id
             except Exception as exc:  # a failed send must not kill the poller
                 print(f"send failed: {type(exc).__name__}: {exc}", flush=True)

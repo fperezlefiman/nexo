@@ -114,6 +114,8 @@ def main(argv=None) -> int:
     notify = sub.add_parser("notify", help="send one message to a channel (scripts outside nexo)")
     notify.add_argument("profile", help="profile name, chat id, or 'telegram' for the operator's chat")
     notify.add_argument("text")
+    notify.add_argument("--md", action="store_true",
+                        help="parse the text as Markdown (``` blocks become tappable copy blocks)")
     ev = sub.add_parser("evals", help="measure memory retrieval against the gold set")
     ev.add_argument(
         "--retriever",
@@ -219,7 +221,8 @@ def main(argv=None) -> int:
         from .jobs import notify as notify_channel
 
         try:
-            chat = notify_channel(args.profile, args.text)
+            chat = notify_channel(args.profile, args.text,
+                                  parse_mode="Markdown" if args.md else None)
         except RuntimeError as exc:
             sys.exit(f"no pude enviar: {exc}")
         print(f"sent to {chat}")

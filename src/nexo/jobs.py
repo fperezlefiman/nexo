@@ -247,7 +247,8 @@ def job_metrics() -> list[dict]:
         return cur.fetchall()
 
 
-def deliver(chat_id: str, text: str, channel_id: str | None = None) -> None:
+def deliver(chat_id: str, text: str, channel_id: str | None = None,
+            parse_mode: str | None = None) -> None:
     """Hand the output to the channel that owns the job. Each channel may have its own bot.
 
     Raises when Telegram refused every chunk: `send` swallows the error to keep the poller alive,
@@ -259,11 +260,11 @@ def deliver(chat_id: str, text: str, channel_id: str | None = None) -> None:
     token = token_for(channel or {})
     if not token:
         raise RuntimeError("no telegram token for this channel")
-    if TelegramBot(token).send(chat_id, text) is None:
+    if TelegramBot(token).send(chat_id, text, parse_mode=parse_mode) is None:
         raise RuntimeError(f"telegram refused the message for chat {chat_id}")
 
 
-def notify(target: str, text: str) -> str:
+def notify(target: str, text: str, parse_mode: str | None = None) -> str:
     """Send one message to a channel. `target` is what the caller already has:
 
     - a profile name (`freelance`),
@@ -286,7 +287,7 @@ def notify(target: str, text: str) -> str:
         row = cur.fetchone()
     if not row:
         raise RuntimeError(f"no enabled channel for target '{target}'")
-    deliver(row["external_id"], text, row["id"])
+    deliver(row["external_id"], text, row["id"], parse_mode=parse_mode)
     return row["external_id"]
 
 
