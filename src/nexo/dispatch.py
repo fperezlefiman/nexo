@@ -30,10 +30,11 @@ MAX_HISTORY = 12
 MAX_MEMORIES = 15
 # A profile stores one model as `provider/model`; a bare id means this provider.
 DEFAULT_PROVIDER = os.environ.get("NEXO_MODEL_PROVIDER", "opencode")
-STREAM_TIMEOUT = float(os.environ.get("NEXO_STREAM_TIMEOUT", "600"))
+STREAM_TIMEOUT = float(os.environ.get("NEXO_STREAM_TIMEOUT", "1800"))
 # A scout-like job spends ~100 s in its command before the turn starts, and the turn itself has
-# been measured at 166-178 s. 180 s cut real work twice; 600 s matches the stream budget.
-TURN_TIMEOUT = float(os.environ.get("NEXO_TURN_TIMEOUT", "600"))
+# been measured at 166-178 s. 180 s cut real work twice; 1800 s is what long research turns need
+# (a 600 s budget killed a full video sweep on 2026-11-26).
+TURN_TIMEOUT = float(os.environ.get("NEXO_TURN_TIMEOUT", "1800"))
 # The engine session is a context cache, not an identity (ADR 0004). Left alone it grows forever:
 # 74 k input tokens were measured for a 15-char message on 2026-11-25, 91 % of it engine-side.
 SESSION_TTL = timedelta(hours=float(os.environ.get("NEXO_SESSION_TTL_HOURS", "2")))
