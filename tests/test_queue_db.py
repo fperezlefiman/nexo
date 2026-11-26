@@ -192,9 +192,13 @@ def test_notify_sends_to_the_profile_channel(monkeypatch):
     from nexo import jobs
 
     sent = []
-    monkeypatch.setattr(jobs, "deliver", lambda chat, text, channel=None: sent.append((chat, text, channel)))
+    monkeypatch.setattr(jobs, "deliver",
+                        lambda chat, text, channel=None, parse_mode=None:
+                        sent.append((chat, text, channel, parse_mode)))
     assert jobs.notify("t", "hola") == "-1"
-    assert sent == [("-1", "hola", "chn_t")]
+    assert sent == [("-1", "hola", "chn_t", None)]
+    assert jobs.notify("t", "hola", parse_mode="Markdown") == "-1"
+    assert sent[-1] == ("-1", "hola", "chn_t", "Markdown")
 
 
 def test_notify_fails_loudly_for_a_profile_without_channel():
@@ -209,7 +213,8 @@ def test_notify_accepts_a_chat_id(monkeypatch):
     from nexo import jobs
 
     sent = []
-    monkeypatch.setattr(jobs, "deliver", lambda chat, text, channel=None: sent.append((chat, text, channel)))
+    monkeypatch.setattr(jobs, "deliver",
+                        lambda chat, text, channel=None, parse_mode=None: sent.append((chat, text, channel)))
     assert jobs.notify("-1", "hola") == "-1"
     assert sent == [("-1", "hola", "chn_t")]
 
@@ -225,6 +230,7 @@ def test_notify_maps_the_bare_word_telegram_to_the_operator_chat(monkeypatch):
                        VALUES ('chn_d','telegram','8965894123','prf_d')""")
         conn.commit()
     sent = []
-    monkeypatch.setattr(jobs, "deliver", lambda chat, text, channel=None: sent.append((chat, channel)))
+    monkeypatch.setattr(jobs, "deliver",
+                        lambda chat, text, channel=None, parse_mode=None: sent.append((chat, channel)))
     assert jobs.notify("telegram", "hola") == "8965894123"
     assert sent == [("8965894123", "chn_d")]
